@@ -1,0 +1,33 @@
+# config file version
+apiVersion: 1
+
+# list of datasources that should be deleted from the database
+deleteDatasources:
+  - name: Loki
+    orgId: 1
+
+# list of datasources to insert/update depending
+# what's available in the database
+datasources:
+  # <string, required> name of the datasource. Required
+  - name: Loki
+    # <string, required> datasource type. Required
+    type: loki
+    # <string, required> access mode. proxy or direct (Server or Browser in the UI). Required
+    access: direct
+    # <string> url
+    url: http://localhost:3100  # Direct connection to Loki
+    # <bool> mark as default datasource. Max one per org
+    isDefault: true
+    # <bool> allow users to edit datasources from the UI.
+    editable: true
+    # <map> fields that will be converted to json and stored in jsonData
+    jsonData:
+      maxLines: 1000
+    # <bool> use basic auth
+    basicAuth: true
+    # <string> basic auth username
+    basicAuthUser: ${LOKI_USERNAME}  # Nginx auth credentials
+    secureJsonData:
+      basicAuthPassword: ${LOKI_PASSWORD}  # Nginx auth credentials
+    version: 1
